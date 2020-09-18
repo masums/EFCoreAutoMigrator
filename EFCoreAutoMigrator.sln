@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30503.244
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCoreAutoMigrator", "src\EFCoreAutoMigrator.csproj", "{3389606D-9E4A-4245-BE57-6D8A441E64C6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example", "example\Example.csproj", "{BE72E6C9-D372-442E-9B37-85BCCB033928}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3389606D-9E4A-4245-BE57-6D8A441E64C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3389606D-9E4A-4245-BE57-6D8A441E64C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3389606D-9E4A-4245-BE57-6D8A441E64C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3389606D-9E4A-4245-BE57-6D8A441E64C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE72E6C9-D372-442E-9B37-85BCCB033928}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE72E6C9-D372-442E-9B37-85BCCB033928}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE72E6C9-D372-442E-9B37-85BCCB033928}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE72E6C9-D372-442E-9B37-85BCCB033928}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7A03A4AF-339A-4F44-AF9E-6CF798DAEEAF}
+	EndGlobalSection
+EndGlobal

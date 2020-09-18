@@ -19,6 +19,7 @@
             public static async Task AutoMigrateMyDB(DbContext db){
                 EFCoreAutoMigrator dbMigrator = new EFCoreAutoMigrator(db, new Logger());
                 MigrationScriptExecutor migrationScriptExcutor = await dbMigrator.PrepareMigration();
+            dbMigrator.ShouldAllowDestructive(true);
 
                 // Checking if there are migrations
                 if (migrationScriptExcutor.HasMigrations()){
