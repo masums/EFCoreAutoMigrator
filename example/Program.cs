@@ -1,66 +1,74 @@
-﻿    using System;
-    using System.IO;
-    using System.Threading.Tasks;
-    using CentridNet.EFCoreAutoMigrator;
-    using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.IO;
+using System.Threading.Tasks;
+using CentridNet.EFCoreAutoMigrator;
+using Microsoft.EntityFrameworkCore;
 
-    namespace EFCoreAutoMigratorExample
-    {
-        class Program
-        {
-            static void Main()
-            {
-                using (var db = new BloggingContext())
-                {
-                    AutoMigrateMyDB(db).Wait();  
-                }
-            }
+namespace EFCoreAutoMigratorExample
+{
+	class Program
+	{
+		static void Main()
+		{
+			using (var db = new BloggingContext())
+			{
+				AutoMigrateMyDB(db).Wait();
+			}
+		}
 
-            public static async Task AutoMigrateMyDB(DbContext db){
-                EFCoreAutoMigrator dbMigrator = new EFCoreAutoMigrator(db, new Logger());
-                MigrationScriptExecutor migrationScriptExcutor = await dbMigrator.PrepareMigration();
-            dbMigrator.ShouldAllowDestructive(true);
+		public static async Task AutoMigrateMyDB(DbContext db)
+		{
+			EFCoreAutoMigrator dbMigrator = new EFCoreAutoMigrator(db, new Logger());
+			dbMigrator.ShouldAllowDestructive(true);
+			MigrationScriptExecutor migrationScriptExcutor = await dbMigrator.PrepareMigration();
 
-                // Checking if there are migrations
-                if (migrationScriptExcutor.HasMigrations()){
-                    Console.WriteLine("The program `Example` wants to run the following script on your database: ");
-                    Console.WriteLine("------");
+			// Checking if there are migrations
+			if (migrationScriptExcutor.HasMigrations())
+			{
+				Console.WriteLine("The program `Example` wants to run the following script on your database: ");
+				Console.WriteLine("------");
 
-                    // Printing out the script to be run if they are
-                    Console.WriteLine(migrationScriptExcutor.GetMigrationScript());
-                    Console.WriteLine("------");
+				// Printing out the script to be run if they are
+				Console.WriteLine(migrationScriptExcutor.GetMigrationScript());
+				Console.WriteLine("------");
 
-                    Console.WriteLine("Do you want (R)un it, (S)ave the script or (C)ancel. ?");
-                    string userInput = Console.ReadLine();
-                    if (userInput.Length == 0){
-                        Console.WriteLine("No value entered. Exiting...");
-                        Environment.Exit(0);
-                    }
-                    if (userInput[0] == 'R'){
-                        // Migrating
-                        MigrationResult result = await migrationScriptExcutor.MigrateDB();
-                        if (result == MigrationResult.Migrated){
-                            Console.WriteLine("Completed succesfully.");
-                        }
-                        else if (result == MigrationResult.Noop){
-                            Console.WriteLine("Completed. There was nothing to migrate.");
-                        }
-                        else if (result == MigrationResult.ErrorMigrating){
-                            Console.WriteLine("Error occurred whilst migrating.");
-                        }
-                    }
-                    else if (userInput[0] == 'S'){
-                        using (StreamWriter writer = new StreamWriter(Path.Join(Environment.CurrentDirectory,"ERCoreAutoMigratorGenetaedScript.sql"))) 
-                        {  
-                            writer.WriteLine(migrationScriptExcutor.GetMigrationScript());
-                            Console.WriteLine("Migration script saved succefully.");
-                        } 
-                    }
-                }
-                else{
-                    Console.WriteLine("Completed. There was nothing to migrate.");
-                }
-                
-            }
-        }
-    }
+				Console.WriteLine("Do you want (R)un it, (S)ave the script or (C)ancel. ?");
+				string userInput = Console.ReadLine();
+				if (userInput.Length == 0)
+				{
+					Console.WriteLine("No value entered. Exiting...");
+					Environment.Exit(0);
+				}
+				if (userInput[0] == 'R')
+				{
+					// Migrating
+					MigrationResult result = await migrationScriptExcutor.MigrateDB();
+					if (result == MigrationResult.Migrated)
+					{
+						Console.WriteLine("Completed succesfully.");
+					}
+					else if (result == MigrationResult.Noop)
+					{
+						Console.WriteLine("Completed. There was nothing to migrate.");
+					}
+					else if (result == MigrationResult.ErrorMigrating)
+					{
+						Console.WriteLine("Error occurred whilst migrating.");
+					}
+				}
+				else if (userInput[0] == 'S')
+				{
+					using (StreamWriter writer = new StreamWriter(Path.Join(Environment.CurrentDirectory, "ERCoreAutoMigratorGenetaedScript.sql")))
+					{
+						writer.WriteLine(migrationScriptExcutor.GetMigrationScript());
+						Console.WriteLine("Migration script saved succefully.");
+					}
+				}
+			}
+			else
+			{
+				Console.WriteLine("Completed. There was nothing to migrate.");
+			} 
+		}
+	}
+}

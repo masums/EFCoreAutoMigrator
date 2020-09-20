@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore.Design.Internal;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations.Internal;
+using Microsoft.EntityFrameworkCore.Migrations.Operations.Builders;
 using Microsoft.EntityFrameworkCore.Migrations.Design;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.Extensions.DependencyInjection;
@@ -135,10 +137,12 @@ namespace CentridNet.EFCoreAutoMigrator
                 oldModel = dependencies.SnapshotModelProcessor.Process(oldModel);
 
                 var operations = dependencies.MigrationsModelDiffer
-                    .GetDifferences(oldModel, newModel)
+                    .GetDifferences(oldModel.GetRelationalModel(), newModel.GetRelationalModel())
                     // Ignore all seed updates. Workaround for (https://github.com/aspnet/EntityFrameworkCore/issues/18943)
                     .Where(o => !(o is UpdateDataOperation)) 
                     .ToList();
+
+                
 
                 if (operations.Any())
                 {

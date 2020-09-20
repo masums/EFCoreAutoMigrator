@@ -10,7 +10,7 @@ namespace EFCoreAutoMigratorExample
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Post> Posts { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
+		protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite("Data Source=EfCoreAutoMigrator.db");
     }
 
@@ -30,5 +30,13 @@ namespace EFCoreAutoMigratorExample
 
         public int BlogId { get; set; }
         public Blog Blog { get; set; }
-    }
+		public List<Comment> Comments { get; set; }
+	}
+
+	public class Comment
+	{
+		public int Id { get; set; }
+		public string Text { get; set; }
+		public string CommentBy { get; set; }
+	}
 }

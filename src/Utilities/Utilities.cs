@@ -21,7 +21,8 @@ namespace CentridNet.EFCoreAutoMigrator.Utilities{
 
     class Utilities{
 
-        public static ModelSnapshot CompileSnapshot(Assembly migrationAssembly, DbContext dbContext, string source){            
+        public static ModelSnapshot CompileSnapshot(Assembly migrationAssembly, DbContext dbContext, string source)
+        { 
             return Compile<ModelSnapshot>(source, new HashSet<Assembly>() {
                 typeof(object).Assembly,
                 typeof(DbContext).Assembly,
@@ -31,7 +32,7 @@ namespace CentridNet.EFCoreAutoMigrator.Utilities{
                 typeof(ModelSnapshot).Assembly,
                 typeof(SqlServerValueGenerationStrategy).Assembly,
                 typeof(AssemblyTargetedPatchBandAttribute).Assembly
-            }.Concat(AppDomain.CurrentDomain.GetAssemblies().Where(a => a.GetName().Name.Contains(dbContext.Database.ProviderName) || a.GetName().Name == "netstandard" )).ToHashSet());
+            }.Concat(AppDomain.CurrentDomain.GetAssemblies().Where(a => a.GetName().Name.Contains(dbContext.Database.ProviderName) || a.GetName().Name == "netstandard" || a.GetName().Name.Contains("System.Runtime") )).ToHashSet());
         }
         
         private static T Compile<T>(string source, IEnumerable<Assembly> references) 
